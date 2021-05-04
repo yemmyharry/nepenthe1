@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
+import { TextField, Button, Typography, Paper, Input } from "@material-ui/core";
 import {useDispatch} from 'react-redux'
 
 import useStyles from "./styles";
@@ -16,14 +16,16 @@ export default function Form() {
     tags: "",
     selectedFile: "",
   });
+
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(createPost(postData))
   };
+
   const clear = () => {};
 
 
-  const convertBase64 = (file) => {
+  const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file)
@@ -35,15 +37,17 @@ export default function Form() {
       }
     })
   }
-  const handleFileRead = async (event) => {
-    const file = event.target.files[0]
-    const base64 = await convertBase64(file)
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0]
+    const base64 = await convertToBase64(file)
     setPostData({ ...postData, selectedFile: base64})
     console.log(base64)
+  
   }
 
+
   return (
-    <Paper>
+    <Paper className={classes.paper}>
       <form
         autoComplete="off"
         noValidate
@@ -62,7 +66,7 @@ export default function Form() {
             setPostData({ ...postData, creator: e.target.value })
           }
         />
-        <TextField
+        <Input
           name="title"
           variant="outlined"
           label="Title"
@@ -83,22 +87,19 @@ export default function Form() {
         <TextField
           name="tags"
           variant="outlined"
-          label="Tags"
+          label="Tags (coma separated)"
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
         />
         <div className={classes.fileInput}>
           <TextField
-                id="originalFileName"
                 type="file"
-                inputProps={{ accept: 'image/*, .xlsx, .xls, .csv, .pdf, .pptx, .pptm, .ppt' }}
-                required
-                label="Document"
-                name="originalFileName"
-                onChange={e => handleFileRead(e)}
-                size="small"
-                variant="standard"
+                label="Image"
+                name="selectedFile"
+                accept=".jpeg, .png, .jpg"
+                onChange={e => handleFileUpload(e)}
+               
               />
         </div>
       
