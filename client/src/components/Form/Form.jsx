@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, Typography, Paper, Input } from "@material-ui/core";
+import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import {useDispatch} from 'react-redux'
 
 import useStyles from "./styles";
@@ -66,7 +66,7 @@ export default function Form() {
             setPostData({ ...postData, creator: e.target.value })
           }
         />
-        <Input
+        <TextField
           name="title"
           variant="outlined"
           label="Title"
@@ -93,7 +93,7 @@ export default function Form() {
           onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
         />
         <div className={classes.fileInput}>
-          <TextField
+          <input
                 type="file"
                 label="Image"
                 name="selectedFile"

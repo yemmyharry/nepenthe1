@@ -4,6 +4,7 @@ import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 import {createStore, applyMiddleware, compose} from 'redux'
 
+import css from './index.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import reducers from './reducers'
