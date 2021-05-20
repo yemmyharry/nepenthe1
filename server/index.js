@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -12,8 +13,9 @@ app.use(express.urlencoded({limit: '25mb', extended: true}));
 
 app.use(cors());
 
+dotenv.config()
 
-// mongoose.connect('mongodb+srv://moosemuffin:immortal@yemmyharry.vgumn.mongodb.net/test',{ useUnifiedTopology: true, useNewUrlParser: true  })
+// mongoose.connect(process.env.MONGO_URI,{ useUnifiedTopology: true, useNewUrlParser: true  })
 // .then(console.log('connected to database'))
 // .catch((err)=>{console.log(err)})
 

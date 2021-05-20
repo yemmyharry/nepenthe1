@@ -24,3 +24,19 @@ export const createPost = async (req, res, next) => {
     });
   }
 };
+
+
+export const updatePost = async (req, res, next) => {
+  const id = req.params
+  const body = req.body
+
+    if(mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send({message: 'Invalid Id'})
+
+    const updatedPost = await Post.findByIdAndUpdate(id, body, {new: true})
+    res.status(202).json({message: 'post updated', updatedPost: updatedPost})
+
+    
+    
+  
+}
